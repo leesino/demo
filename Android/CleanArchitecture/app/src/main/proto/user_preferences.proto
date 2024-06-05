@@ -1,0 +1,8 @@
+
+syntax = "proto3";
+
+message UserPreferences {
+int32   uid = 1;
+string  api_token = 2;
+bool isLogin = 3;
+}
