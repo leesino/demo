@@ -1,4 +1,4 @@
-package com.example.compose.ui.theme.sample
+package com.example.compose.sample
 
 
 import androidx.compose.foundation.BorderStroke
