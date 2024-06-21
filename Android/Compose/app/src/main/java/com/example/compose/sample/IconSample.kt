@@ -1,18 +1,33 @@
 package com.example.compose.sample
 
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
@@ -42,25 +57,142 @@ fun IconSample() {
 @Composable
 fun ImageSample(){
     Column {
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+        Image(painter = painterResource(id = R.drawable.android),
+            contentDescription = null,
+            modifier = Modifier
+                .size(90.dp)
+                .background(Color.Gray))
+        Image(painter = painterResource(id = R.drawable.android),
+            contentDescription = null,
+            contentScale = ContentScale.None,
+            modifier = Modifier
+                .size(90.dp)
+                .background(Color.Red))
+        Image(painter = painterResource(id = R.drawable.android),
             contentDescription = null,
             contentScale = ContentScale.Inside,
-            colorFilter = ColorFilter.tint(Color.Green, blendMode = BlendMode.Color)
-        )
+            modifier = Modifier
+                .size(90.dp)
+                .background(Color.Green))
+        Image(painter = painterResource(id = R.drawable.android),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+            modifier = Modifier
+                .size(90.dp)
+                .background(Color.Yellow))
+        Image(painter = painterResource(id = R.drawable.android),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(90.dp)
+                .background(Color.Blue))
+        Image(painter = painterResource(id = R.drawable.android),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier
+                .size(90.dp)
+                .background(Color.Cyan))
+
+        Image(painter = painterResource(id = R.drawable.android),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .size(90.dp)
+                .background(Color.Magenta))
+        Image(painter = painterResource(id = R.drawable.android),
+            contentDescription = null,
+            contentScale = ContentScale.FillHeight,
+            modifier = Modifier
+                .size(90.dp)
+                .background(Color.Yellow))
     }
 }
 
 @Composable
-fun AsyncImageSample(){
-    AsyncImage(
-        model = "https://image.baidu.com/search/detail?ct=503316480&z=undefined&tn=baiduimagedetail&ipn=d&word=jetpack&step_word=&lid=12295549488477976543&ie=utf-8&in=&cl=2&lm=-1&st=undefined&hd=undefined&latest=undefined&copyright=undefined&cs=4236239468,1755090028&os=873663976,3867994079&simid=3369909829,317826972&pn=1&rn=1&di=7360350738658099201&ln=1170&fr=&fmq=1718587882095_R&fm=&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&is=0,0&istype=0&ist=&jit=&bdtype=0&spn=0&pi=0&gsm=1e&objurl=https%3A%2F%2Fimg.zhilepin.com%2Fueditor%2Fimage%2F20151110%2F1447145638988009.jpg&rpstart=0&rpnum=0&adpicid=0&nojc=undefined&dyTabStr=MCwxLDMsMiw2LDQsNSw3LDgsOQ%3D%3D",
-        contentDescription = null,
+fun ImageSample1(){
+    Column {
+        Image(painter = painterResource(id = R.drawable.dog),
+            contentDescription = "圆形图片",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(200.dp)
+                .clip(CircleShape))
+        Image(painter = painterResource(id = R.drawable.dog),
+            contentDescription = "圆角图片",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(200.dp)
+                .clip(RoundedCornerShape(16.dp)))
+    }
+}
+
+@Composable
+fun ImageSample2(){
+    val borderWidth = 6.dp
+    Image(
+        painter = painterResource(id = R.drawable.dog),
+        contentDescription = "裁剪+边框",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .size(150.dp)
+            .border(
+                BorderStroke(borderWidth, Color.Red),
+                CircleShape
+            )
+            .padding(borderWidth)
+            .clip(CircleShape)
     )
 }
+
+@Composable
+fun ImageSample3(){
+    val rainbowColorsBrush = remember {
+        Brush.sweepGradient(
+            listOf(Color.Green,Color.Blue,Color.Red,Color.Cyan
+            )
+        )
+    }
+    Image(painter = painterResource(id = R.drawable.dog),
+        contentDescription = "渐变边框",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.size(150.dp)
+            .border(BorderStroke(6.dp, rainbowColorsBrush),
+                CircleShape)
+            .padding(6.dp)
+            .clip(CircleShape)
+    )
+}
+
+@Composable
+fun ImageSample4(){
+    Image(
+        painter = painterResource(id = R.drawable.dog),
+        contentDescription = "黑白处理",
+
+        colorFilter = ColorFilter.colorMatrix(
+            ColorMatrix().apply { setToSaturation(0f) })
+    )
+}
+
+@Composable
+fun ImageSample5(){
+    Image(
+        painter = painterResource(id = R.drawable.dog),
+        contentDescription = "模糊处理，Android12及以上才生效",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .size(150.dp)
+            .blur(
+                radiusX = 10.dp,
+                radiusY = 10.dp,
+                edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
+            )
+    )
+}
+
 
 @Preview
 @Composable
 fun IconSamplePreview() {
-    AsyncImageSample()
+    ImageSample5()
 }
