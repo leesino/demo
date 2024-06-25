@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Divider
@@ -61,6 +64,17 @@ fun LazyColumnSample1() {
                     Log.e("LazyColumn", "onDispose:$it")
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun LazyVerticalGridSample() {
+    val datas = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+        items(datas) {
+            Text("Grid Item $it",
+                fontSize = 24.sp)
         }
     }
 }
